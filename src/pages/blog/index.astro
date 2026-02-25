@@ -2,13 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogFilter from '../../components/BlogFilter.tsx';
 import { getCollection } from 'astro:content';
+import { getReadingTime } from '../../utils/reading-time';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = allPosts
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
   .map(post => {
-    const words = post.body?.split(/\s+/).length ?? 100;
-    const minutesRead = Math.max(1, Math.ceil(words / 200));
+    const minutesRead = getReadingTime(post.body);
     return {
       slug: post.slug,
       title: post.data.title,

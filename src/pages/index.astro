@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
+import { getReadingTime } from '../utils/reading-time';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPosts = allPosts
@@ -14,10 +15,6 @@ const featuredProjects = allProjects
   .filter(p => p.data.featured)
   .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
-function getReadingTime(post: (typeof latestPosts)[number]) {
-  const words = post.body?.split(/\s+/).length ?? 100;
-  return Math.max(1, Math.ceil(words / 200));
-}
 ---
 
 <BaseLayout
@@ -78,7 +75,7 @@ function getReadingTime(post: (typeof latestPosts)[number]) {
       <div class="posts-grid">
         {latestPosts.map((post, i) => (
           <div data-reveal style={`transition-delay: ${i * 0.12}s`}>
-            <PostCard post={post} minutesRead={getReadingTime(post)} />
+            <PostCard post={post} minutesRead={getReadingTime(post.body)} />
           </div>
         ))}
       </div>
