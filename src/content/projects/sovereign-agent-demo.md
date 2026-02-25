@@ -8,7 +8,7 @@ techStack:
   - Azure AI
   - SharePoint
 status: learning
-featured: true
+featured: false
 sortOrder: 2
 ---
 

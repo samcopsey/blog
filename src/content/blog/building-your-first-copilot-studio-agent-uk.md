@@ -10,7 +10,7 @@ tags:
   - sovereign-cloud
   - data-residency
   - agents
-draft: false
+draft: true
 githubRepo: "https://github.com/samcopsey/copilot-studio-uk-agent"
 ---
 

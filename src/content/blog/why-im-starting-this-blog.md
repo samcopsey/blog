@@ -9,7 +9,7 @@ tags:
   - engineering-leadership
   - microsoft-ai
   - sovereign-cloud
-draft: false
+draft: true
 ---
 
 <!-- Sam will write the actual content for this post -->
