@@ -4,7 +4,12 @@ import ThemeToggle from './ThemeToggle.tsx';
 
 <header class="header">
   <div class="header-inner">
-    <a href="/" class="site-name">Sam Copsey</a>
+    <a href="/" class="site-name" aria-label="Sam Copsey — home">
+      <span class="logo-wrap">
+        <img src="/logo.png" alt="" width="28" height="28" class="logo-img" />
+      </span>
+      <span class="site-name-text">Sam Copsey</span>
+    </a>
     <nav aria-label="Main navigation">
       <ul class="nav-links">
         <li><a href="/blog">Blog</a></li>
@@ -51,16 +56,54 @@ import ThemeToggle from './ThemeToggle.tsx';
   }
 
   .site-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-weight: 600;
     font-size: 17px;
     color: var(--text-primary);
     text-decoration: none;
     margin-right: auto;
     white-space: nowrap;
+    transition: color 0.15s ease;
   }
 
   .site-name:hover {
     color: var(--accent);
+  }
+
+  /* Logo container — clips the white background to a rounded square */
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    overflow: hidden;
+    flex-shrink: 0;
+    /* In dark mode, multiply blend removes the white bg so the blob floats */
+    background: transparent;
+  }
+
+  .logo-img {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    /* multiply makes white transparent against any background */
+    mix-blend-mode: multiply;
+    display: block;
+  }
+
+  /* In light mode, multiply works perfectly. In dark mode, switch to screen
+     so the logo's colours show against the dark header. */
+  :global(:root:not(.light)) .logo-img {
+    mix-blend-mode: screen;
+    filter: brightness(1.1) saturate(1.2);
+  }
+
+  .site-name-text {
+    letter-spacing: -0.01em;
   }
 
   .nav-links {

@@ -125,66 +125,74 @@ const featuredProjects = allProjects
     min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    text-align: center;
-    padding: 80px 0 140px;
+    /* Break out of the max-width container so the glow fills the full viewport */
+    margin-left: calc(50% - 50vw);
+    width: 100vw;
+    /* Mobile padding mirrors main's px-6 */
+    padding: 80px 24px 140px;
   }
 
-  /* Radial glow orb */
+  @media (min-width: 768px) {
+    .hero {
+      /* At md+, match main's px-12, then grow with the viewport on wide screens */
+      padding-left: max(48px, calc((100vw - 1200px) / 2 + 48px));
+      padding-right: max(48px, calc((100vw - 1200px) / 2 + 48px));
+    }
+  }
+
+  /* Full-coverage glow — fills the entire hero, not just a small orb */
   .hero-orb {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 900px;
-    height: 600px;
-    transform: translate(-50%, -58%);
-    background: radial-gradient(
-      ellipse at center,
-      rgba(59, 130, 246, 0.1) 0%,
-      rgba(59, 130, 246, 0.04) 40%,
-      transparent 70%
-    );
+    inset: 0;
+    background:
+      /* Primary spotlight — right of centre */
+      radial-gradient(ellipse 75% 65% at 68% 42%, rgba(79, 70, 229, 0.32) 0%, rgba(79, 70, 229, 0.08) 45%, transparent 65%),
+      /* Purple bloom — upper left, behind text */
+      radial-gradient(ellipse 60% 55% at 20% 35%, rgba(147, 51, 234, 0.22) 0%, transparent 55%),
+      /* Soft blue ambient — full coverage base */
+      radial-gradient(ellipse 130% 90% at 50% 55%, rgba(37, 99, 235, 0.09) 0%, transparent 70%);
     pointer-events: none;
-    animation: orbPulse 6s ease-in-out infinite;
+    animation: orbPulse 7s ease-in-out infinite;
   }
 
   :global(.light) .hero-orb {
-    background: radial-gradient(
-      ellipse at center,
-      rgba(37, 99, 235, 0.06) 0%,
-      rgba(37, 99, 235, 0.02) 40%,
-      transparent 70%
-    );
+    background:
+      radial-gradient(ellipse 75% 65% at 68% 42%, rgba(79, 70, 229, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 55% at 20% 35%, rgba(147, 51, 234, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 130% 90% at 50% 55%, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
   }
 
   @keyframes orbPulse {
-    0%, 100% { opacity: 0.7; transform: translate(-50%, -58%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%, -58%) scale(1.08); }
+    0%, 100% { opacity: 0.75; }
+    50%       { opacity: 1; }
   }
 
-  /* Subtle dot grid background */
+  /* Dot grid — expanded to fill the full hero width */
   .hero-grid {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: 28px 28px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    /* Fade out toward edges — wider mask so dots fill more space */
+    mask-image: radial-gradient(ellipse 110% 95% at 50% 50%, black 25%, transparent 100%);
     pointer-events: none;
   }
 
   :global(.light) .hero-grid {
-    background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(0, 0, 0, 0.055) 1px, transparent 1px);
   }
 
-  /* Hero inner content */
+  /* Hero inner content — left-aligned, constrained width */
   .hero-inner {
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0;
+    max-width: clamp(320px, 56vw, 680px);
   }
 
   /* Label */
@@ -239,7 +247,6 @@ const featuredProjects = allProjects
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
     margin-bottom: 40px;
     opacity: 0;
     animation: slideUp 0.7s ease forwards;
@@ -263,7 +270,6 @@ const featuredProjects = allProjects
     gap: 12px;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: center;
     opacity: 0;
     animation: slideUp 0.7s ease forwards;
     animation-delay: 0.54s;

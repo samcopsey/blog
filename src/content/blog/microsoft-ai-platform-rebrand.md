@@ -10,7 +10,7 @@ tags:
   - copilot-studio
   - engineering-leadership
   - strategy
-draft: false
+draft: true
 ---
 
 <!-- Sam will write the actual content for this post -->
