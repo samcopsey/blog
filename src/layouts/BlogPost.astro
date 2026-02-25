@@ -1,0 +1,124 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  minutesRead: number;
+}
+
+const { post, minutesRead } = Astro.props;
+const { title, description, pubDate, pillar, heroImage, githubRepo } = post.data;
+
+const formattedDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(pubDate));
+
+const pillarLabels: Record<string, string> = {
+  'agent-building': 'Agent Building',
+  'engineering-leadership': 'Engineering Leadership',
+  'sovereign-ai': 'Sovereign AI',
+};
+
+const pillarStyles: Record<string, string> = {
+  'agent-building': 'background: rgba(59, 130, 246, 0.15); color: #3b82f6;',
+  'engineering-leadership': 'background: rgba(34, 197, 94, 0.15); color: #22c55e;',
+  'sovereign-ai': 'background: rgba(168, 85, 247, 0.15); color: #a855f7;',
+};
+---
+
+<BaseLayout title={title} description={description} ogImage={heroImage}>
+  <div class="post-container">
+    <a href="/blog" class="back-link">← Back to blog</a>
+    <article>
+      <header class="post-header">
+        <h1 class="post-title">{title}</h1>
+        <div class="post-meta">
+          <span class="pillar-badge" style={pillarStyles[pillar]}>{pillarLabels[pillar]}</span>
+          <time datetime={new Date(pubDate).toISOString()}>{formattedDate}</time>
+          <span class="separator" aria-hidden="true">·</span>
+          <span>{minutesRead} min read</span>
+          {githubRepo && (
+            <>
+              <span class="separator" aria-hidden="true">·</span>
+              <a href={githubRepo} target="_blank" rel="noopener noreferrer" class="github-link">
+                View on GitHub
+              </a>
+            </>
+          )}
+        </div>
+      </header>
+      <div class="prose">
+        <slot />
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 96px 0 64px;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 32px;
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .post-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .pillar-badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+
+  .separator {
+    color: var(--text-tertiary);
+  }
+
+  .github-link {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .github-link:hover {
+    color: var(--accent-hover);
+  }
+</style>

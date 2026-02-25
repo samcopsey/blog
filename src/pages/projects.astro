@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectFilter from '../components/ProjectFilter.tsx';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects
+  .sort((a, b) => {
+    if (a.data.sortOrder !== b.data.sortOrder) return a.data.sortOrder - b.data.sortOrder;
+    return a.data.title.localeCompare(b.data.title);
+  })
+  .map(p => ({
+    slug: p.slug,
+    title: p.data.title,
+    description: p.data.description,
+    githubUrl: p.data.githubUrl,
+    blogPost: p.data.blogPost,
+    techStack: p.data.techStack,
+    status: p.data.status,
+    featured: p.data.featured,
+    sortOrder: p.data.sortOrder,
+  }));
+---
+
+<BaseLayout
+  title="Projects"
+  description="Things I've built — AI agents, Azure solutions, and tools for engineering teams."
+>
+  <div class="page-container">
+    <div class="page-header">
+      <h1 class="page-title">Projects</h1>
+      <p class="page-subtitle">Things I've built — code on GitHub, context on the blog.</p>
+    </div>
+    <ProjectFilter projects={sortedProjects} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    padding: 96px 0 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 48px;
+  }
+
+  .page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    color: var(--text-primary);
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+  }
+</style>

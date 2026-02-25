@@ -1,0 +1,97 @@
+---
+import Page from '../layouts/Page.astro';
+---
+
+<Page
+  title="About"
+  description="About Sam Copsey — Engineering & Innovation Manager specialising in AI agents, engineering leadership, and sovereign cloud on Azure."
+>
+  <div class="about-container">
+    <h1 class="about-heading">About</h1>
+    <div class="prose">
+      <!-- Replace this placeholder with your career narrative -->
+      <p>
+        Hi, I'm Sam Copsey — an Engineering &amp; Innovation Manager based in the UK.
+      </p>
+
+      <p>
+        This blog is where I write about the things I spend my time thinking about at work: building
+        AI agents in the Microsoft ecosystem, leading engineering teams through a period of rapid
+        change, and making sure AI solutions are deployed responsibly with UK data residency and
+        sovereignty requirements in mind.
+      </p>
+
+      <p>
+        I work primarily in the Microsoft stack — Copilot Studio, Azure AI, Power Platform — and
+        I'm especially interested in how organisations can move from experimental AI projects to
+        production systems that people actually rely on.
+      </p>
+
+      <p>The three pillars of this blog:</p>
+      <ul>
+        <li>
+          <strong>Agent Building</strong> — Practical guides on building and shipping AI agents using
+          Microsoft tools, with a focus on real-world patterns that work in enterprise settings.
+        </li>
+        <li>
+          <strong>Engineering Leadership</strong> — How to lead technical teams in the AI era, from
+          hiring and culture to making sound architectural decisions under uncertainty.
+        </li>
+        <li>
+          <strong>Sovereign AI on Azure</strong> — Building AI solutions that meet UK data residency
+          requirements, particularly for public sector and regulated industries.
+        </li>
+      </ul>
+      <!-- Replace this placeholder with your career narrative -->
+    </div>
+    <div class="about-links">
+      <a
+        href="https://github.com/samcopsey"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="about-link">GitHub</a
+      >
+      <a
+        href="https://linkedin.com/in/samcopsey"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="about-link">LinkedIn</a
+      >
+    </div>
+  </div>
+</Page>
+
+<style>
+  .about-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 96px 0 64px;
+  }
+
+  .about-heading {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 40px;
+    color: var(--text-primary);
+  }
+
+  .about-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .about-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+
+  .about-link:hover {
+    color: var(--accent-hover);
+  }
+</style>

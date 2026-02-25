@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  article?: boolean;
+  publishedDate?: Date;
+}
+
+const { title, description, ogImage = '/og-image.svg', article = false, publishedDate } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const fullTitle = `${title} | Sam Copsey`;
+
+const articleJsonLd = article && publishedDate
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description,
+      image: ogImageURL.toString(),
+      datePublished: publishedDate.toISOString(),
+      author: {
+        '@type': 'Person',
+        name: 'Sam Copsey',
+        url: 'https://blog.samcopsey.co.uk/about',
+      },
+    })
+  : null;
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:type" content={article ? 'article' : 'website'} />
+{article && publishedDate && (
+  <meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+
+{articleJsonLd && <script type="application/ld+json" set:html={articleJsonLd} />}

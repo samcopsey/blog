@@ -1,0 +1,91 @@
+---
+import ThemeToggle from './ThemeToggle.tsx';
+---
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="site-name">Sam Copsey</a>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/projects">Projects</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
+    <ThemeToggle client:load />
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  :global(.light) .header {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .header-inner {
+      padding: 0 48px;
+      gap: 32px;
+    }
+  }
+
+  .site-name {
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--text-primary);
+    text-decoration: none;
+    margin-right: auto;
+    white-space: nowrap;
+  }
+
+  .site-name:hover {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) {
+    .nav-links {
+      gap: 24px;
+    }
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+</style>

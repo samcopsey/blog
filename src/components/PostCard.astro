@@ -1,0 +1,109 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  minutesRead?: number;
+}
+
+const { post, minutesRead } = Astro.props;
+const { title, description, pubDate, pillar } = post.data;
+
+const formattedDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(pubDate));
+
+const pillarLabels: Record<string, string> = {
+  'agent-building': 'Agent Building',
+  'engineering-leadership': 'Engineering Leadership',
+  'sovereign-ai': 'Sovereign AI',
+};
+
+const pillarStyles: Record<string, string> = {
+  'agent-building': 'background: rgba(59, 130, 246, 0.15); color: #3b82f6;',
+  'engineering-leadership': 'background: rgba(34, 197, 94, 0.15); color: #22c55e;',
+  'sovereign-ai': 'background: rgba(168, 85, 247, 0.15); color: #a855f7;',
+};
+---
+
+<a href={`/blog/${post.slug}`} class="post-card">
+  <article>
+    <h2 class="post-title">{title}</h2>
+    <p class="post-description">{description}</p>
+    <div class="post-meta">
+      <span class="pillar-badge" style={pillarStyles[pillar]}>{pillarLabels[pillar]}</span>
+      <time datetime={new Date(pubDate).toISOString()} class="post-date">{formattedDate}</time>
+      {minutesRead && <span class="reading-time">{minutesRead} min read</span>}
+    </div>
+  </article>
+</a>
+
+<style>
+  .post-card {
+    display: block;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+  }
+
+  .post-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .post-description {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin: 0 0 16px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .pillar-badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+
+  .post-date {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .reading-time {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .reading-time::before {
+    content: '·';
+    margin-right: 10px;
+    color: var(--text-tertiary);
+  }
+</style>
