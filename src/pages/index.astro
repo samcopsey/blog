@@ -100,21 +100,25 @@ const featuredProjects = allProjects
   )}
 </BaseLayout>
 
-<!-- Scroll-reveal observer — vanilla JS, no framework needed -->
+<!-- Scroll-reveal observer — re-runs on every View Transitions navigation -->
 <script>
-  const els = document.querySelectorAll('[data-reveal]');
-  const io = new IntersectionObserver(
-    entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-  );
-  els.forEach(el => io.observe(el));
+  function initReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+    els.forEach(el => io.observe(el));
+  }
+  document.addEventListener('astro:page-load', initReveal);
 </script>
 
 <style>

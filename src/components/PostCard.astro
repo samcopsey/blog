@@ -30,7 +30,7 @@ const pillarStyles: Record<string, string> = {
 
 <a href={`/blog/${post.slug}`} class="post-card">
   <article>
-    <h2 class="post-title">{title}</h2>
+    <h2 class="post-title" transition:name={`post-title-${post.slug}`}>{title}</h2>
     <p class="post-description">{description}</p>
     <div class="post-meta">
       <span class="pillar-badge" style={pillarStyles[pillar]}>{pillarLabels[pillar]}</span>
