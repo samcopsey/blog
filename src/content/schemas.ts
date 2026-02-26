@@ -5,7 +5,7 @@ export const blogSchema = z.object({
   description: z.string(),
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
-  pillar: z.enum(['agent-building', 'engineering-leadership', 'sovereign-ai']),
+  pillar: z.enum(['agent-building', 'engineering-leadership', 'sovereign-ai', 'development']),
   format: z.enum(['how-to', 'opinion', 'architecture', 'project-writeup']),
   tags: z.array(z.string()),
   draft: z.boolean().default(false),

@@ -130,6 +130,31 @@ body {
   margin: 2rem 0;
 }
 
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+}
+
+.prose th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0.6rem 1rem;
+  border-bottom: 2px solid var(--border-hover);
+}
+
+.prose td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
 /* Selection colour */
 ::selection {
   background-color: var(--accent);

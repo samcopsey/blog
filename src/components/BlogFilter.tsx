@@ -5,7 +5,7 @@ interface BlogPost {
   title: string;
   description: string;
   pubDate: string;
-  pillar: 'agent-building' | 'engineering-leadership' | 'sovereign-ai';
+  pillar: 'agent-building' | 'engineering-leadership' | 'sovereign-ai' | 'development';
   format: string;
   tags: string[];
   minutesRead?: number;
@@ -19,12 +19,14 @@ const pillarLabels: Record<string, string> = {
   'agent-building': 'Agent Building',
   'engineering-leadership': 'Engineering Leadership',
   'sovereign-ai': 'Sovereign AI',
+  'development': 'Development',
 };
 
 const pillarStyles: Record<string, { bg: string; text: string }> = {
   'agent-building': { bg: 'rgba(59,130,246,0.15)', text: '#3b82f6' },
   'engineering-leadership': { bg: 'rgba(34,197,94,0.15)', text: '#22c55e' },
   'sovereign-ai': { bg: 'rgba(168,85,247,0.15)', text: '#a855f7' },
+  'development': { bg: 'rgba(249,115,22,0.15)', text: '#f97316' },
 };
 
 const filters = [
@@ -32,6 +34,7 @@ const filters = [
   { id: 'agent-building', label: 'Agent Building' },
   { id: 'engineering-leadership', label: 'Engineering Leadership' },
   { id: 'sovereign-ai', label: 'Sovereign AI' },
+  { id: 'development', label: 'Development' },
 ];
 
 function formatDate(dateStr: string) {
