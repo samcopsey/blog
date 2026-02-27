@@ -9,6 +9,7 @@ interface Props {
 
 const { post, minutesRead } = Astro.props;
 const { title, description, pubDate, pillar, heroImage, githubRepo } = post.data;
+const ogImage = `/og/${post.slug}.png`;
 
 const formattedDate = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
@@ -31,7 +32,7 @@ const pillarStyles: Record<string, string> = {
 };
 ---
 
-<BaseLayout title={title} description={description} ogImage={heroImage}>
+<BaseLayout title={title} description={description} ogImage={ogImage}>
   <div class="post-container">
     <a href="/blog" class="back-link">← Back to blog</a>
     <article>

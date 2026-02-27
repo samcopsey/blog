@@ -14,9 +14,11 @@
   "dependencies": {
     "@astrojs/react": "^4.2.0",
     "@astrojs/rss": "^4.0.11",
+    "@resvg/resvg-js": "^2.6.2",
     "astro": "^5.4.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "satori": "^0.19.2"
   },
   "overrides": {
     "zod-to-json-schema": "3.25.0"
@@ -26,6 +28,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^25.3.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

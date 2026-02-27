@@ -131,4 +131,20 @@ describe('ProjectFilter', () => {
     render(<ProjectFilter projects={mockProjects} />);
     expect(screen.getByText('A project currently in progress.')).toBeInTheDocument();
   });
+
+  it('renders the status label for each project card', () => {
+    render(<ProjectFilter projects={mockProjects} />);
+    // Each label appears in both the filter bar button and the project card status indicator
+    expect(screen.getAllByText('Active')).toHaveLength(2);
+    expect(screen.getAllByText('Complete')).toHaveLength(2);
+    expect(screen.getAllByText('Learning')).toHaveLength(2);
+  });
+
+  it('GitHub links have rel="noopener noreferrer"', () => {
+    render(<ProjectFilter projects={mockProjects} />);
+    const links = screen.getAllByRole('link', { name: /View on GitHub/i });
+    links.forEach(link => {
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+  });
 });

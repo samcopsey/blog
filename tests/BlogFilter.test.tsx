@@ -34,6 +34,16 @@ const mockPosts = [
     tags: ['azure', 'sovereign-cloud'],
     minutesRead: 7,
   },
+  {
+    slug: 'development-post',
+    title: 'Development Post',
+    description: 'A practical development guide.',
+    pubDate: '2026-02-25T00:00:00.000Z',
+    pillar: 'development' as const,
+    format: 'how-to',
+    tags: ['typescript'],
+    minutesRead: 4,
+  },
 ];
 
 describe('BlogFilter', () => {
@@ -42,6 +52,7 @@ describe('BlogFilter', () => {
     expect(screen.getByText('Agent Building Post')).toBeInTheDocument();
     expect(screen.getByText('Engineering Leadership Post')).toBeInTheDocument();
     expect(screen.getByText('Sovereign AI Post')).toBeInTheDocument();
+    expect(screen.getByText('Development Post')).toBeInTheDocument();
   });
 
   it('marks the All button as active by default', () => {
@@ -54,6 +65,7 @@ describe('BlogFilter', () => {
     expect(screen.getByRole('button', { name: 'Agent Building' })).toHaveAttribute('aria-pressed', 'false');
     expect(screen.getByRole('button', { name: 'Engineering Leadership' })).toHaveAttribute('aria-pressed', 'false');
     expect(screen.getByRole('button', { name: 'Sovereign AI' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: 'Development' })).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('filters to only agent-building posts', async () => {
@@ -121,6 +133,24 @@ describe('BlogFilter', () => {
   it('renders post descriptions', () => {
     render(<BlogFilter posts={mockPosts} />);
     expect(screen.getByText('How to build agents in Copilot Studio.')).toBeInTheDocument();
+  });
+
+  it('filters to only development posts', async () => {
+    render(<BlogFilter posts={mockPosts} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Development' }));
+
+    expect(screen.queryByText('Agent Building Post')).not.toBeInTheDocument();
+    expect(screen.queryByText('Engineering Leadership Post')).not.toBeInTheDocument();
+    expect(screen.queryByText('Sovereign AI Post')).not.toBeInTheDocument();
+    expect(screen.getByText('Development Post')).toBeInTheDocument();
+  });
+
+  it('sets aria-pressed on the Development filter when clicked', async () => {
+    render(<BlogFilter posts={mockPosts} />);
+    const btn = screen.getByRole('button', { name: 'Development' });
+    await userEvent.click(btn);
+    expect(btn).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('renders post links pointing to the correct URL', () => {

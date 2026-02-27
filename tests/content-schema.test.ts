@@ -43,7 +43,7 @@ describe('blogSchema', () => {
   });
 
   it('accepts all valid pillar values', () => {
-    const pillars = ['agent-building', 'engineering-leadership', 'sovereign-ai'] as const;
+    const pillars = ['agent-building', 'engineering-leadership', 'sovereign-ai', 'development'] as const;
     pillars.forEach(pillar => {
       expect(() => blogSchema.parse({ ...validBlog, pillar })).not.toThrow();
     });
@@ -83,6 +83,29 @@ describe('blogSchema', () => {
   it('accepts an optional heroImage', () => {
     const result = blogSchema.parse({ ...validBlog, heroImage: '/images/hero.png' });
     expect(result.heroImage).toBe('/images/hero.png');
+  });
+
+  it('coerces updatedDate string to a Date instance', () => {
+    const result = blogSchema.parse({ ...validBlog, updatedDate: '2026-03-01' });
+    expect(result.updatedDate).toBeInstanceOf(Date);
+  });
+
+  it('rejects missing tags', () => {
+    const { tags: _, ...rest } = validBlog;
+    expect(() => blogSchema.parse(rest)).toThrow();
+  });
+
+  it('rejects a non-array tags value', () => {
+    expect(() => blogSchema.parse({ ...validBlog, tags: 'agents' })).toThrow();
+  });
+
+  it('accepts an empty tags array', () => {
+    expect(() => blogSchema.parse({ ...validBlog, tags: [] })).not.toThrow();
+  });
+
+  it('accepts draft: true', () => {
+    const result = blogSchema.parse({ ...validBlog, draft: true });
+    expect(result.draft).toBe(true);
   });
 });
 
@@ -153,5 +176,20 @@ describe('projectSchema', () => {
     expect(() =>
       projectSchema.parse({ ...validProject, techStack: 'TypeScript' })
     ).toThrow();
+  });
+
+  it('rejects missing description', () => {
+    const { description: _, ...rest } = validProject;
+    expect(() => projectSchema.parse(rest)).toThrow();
+  });
+
+  it('accepts a custom sortOrder', () => {
+    const result = projectSchema.parse({ ...validProject, sortOrder: 5 });
+    expect(result.sortOrder).toBe(5);
+  });
+
+  it('accepts featured: true', () => {
+    const result = projectSchema.parse({ ...validProject, featured: true });
+    expect(result.featured).toBe(true);
   });
 });
