@@ -21,7 +21,7 @@ Before reaching for a starter template, I worked through the [official Astro blo
 
 The tutorial walks you from zero — installing Node, initialising a project — through to a fully deployed blog on Netlify (I skipped the Netlify part and just self-hosted). The progression is well-paced: you start with basic pages and Markdown posts, then learn about components, then layouts, then Astro's content API, and finally the islands architecture. Each unit builds on the last without jumping ahead.
 
-A few things genuinely clicked for me during the tutorial that I don't think I would have absorbed from documentation alone:
+A few things clicked for me during the tutorial that I don't think I would have absorbed from documentation alone:
 
 **The mental model for `.astro` files.** An Astro component is split into a frontmatter fence (server-side JavaScript that runs at build time) and a template body (HTML with a JSX-like syntax). Once that clicked, everything else made sense. It's not magic — it's just a build step.
 
@@ -45,7 +45,7 @@ The tutorial uses plain CSS. I wanted Tailwind, specifically the new v4 release,
 
 I kept the Astro default for all static content but added three React islands:
 
-- **ThemeToggle** — persists dark/light preference to `localStorage`, applies a `.light` class on the `<html>` element
+- **ThemeToggle** — persists dark/light preference to `localStorage`, applies a `.light` class on the `<html>` element. Default dark mode, obviously
 - **BlogFilter** — client-side filtering of posts by pillar and tag, zero server round-trips
 - **ProjectFilter** — same pattern for the projects page
 
@@ -53,7 +53,7 @@ The rest of the site ships no JavaScript. Those three components are the entire 
 
 ### Content Collections with Typed Schemas
 
-Both blog posts and project writeups are validated against Zod schemas at build time. The blog schema enforces a `pillar` enum (`agent-building`, `engineering-leadership`, `sovereign-ai`) and a `format` enum (`how-to`, `opinion`, `architecture`, `project-writeup`). This matters: it means I can't accidentally publish a post with a mistyped category, and the filter components can safely enumerate the options without runtime guards.
+Both blog posts and project writeups are validated against Zod schemas at build time. The blog schema enforces a `pillar` enum (`development`, `agent-building`, `engineering-leadership`, `sovereign-ai`) and a `format` enum (`how-to`, `opinion`, `architecture`, `project-writeup`). This means I can't accidentally publish a post with a mistyped category, and the filter components can safely enumerate the options without runtime guards.
 
 ### CI/CD via GitHub Actions
 
@@ -63,23 +63,27 @@ Every push to `main` triggers a workflow that installs dependencies, runs tests,
 
 ## Co-developing with Claude Code
 
-This is the part I want to spend some time on, because it's still relatively new territory and I think the honest reflection is more useful than a polished PR take.
+I've been using [Claude Code](https://www.anthropic.com/claude-code) at work for a few weeks intensively (prior to this GitHub Copilot). Whilst I've found this tool to be a gamechanger at work, it was in this personal project I really got under the hood of it and found out it's true power.
 
-I used [Claude Code](https://www.anthropic.com/claude-code) — Anthropic's CLI tool — throughout the build. Not as an autocomplete that fills in boilerplate, but as something closer to a pairing partner that could hold context across multiple sessions and make decisions with me.
+Before beginning my co-development with Claude Code I first spent time writing a really good specification of what I wanted and how I wanted it. I used the Astro tutorial folder as my starting point for Claude Code to start from.
 
 ### What worked well
 
-**Scaffolding with intent.** When I described the site architecture — content collections, React islands, Tailwind v4, GitHub Pages deployment — Claude could generate a coherent initial scaffold that respected the constraints. The result wasn't production-ready out of the box, but it was a working starting point with the right structure. That's different from copying a template you don't fully understand.
+**Scaffolding with intent.** When I described the site architecture — content collections, React islands, Tailwind v4, GitHub Pages deployment — Claude could generate a coherent initial scaffold that respected the constraints I had set. The result was definitely NOT production-ready out of the box, but it was a working starting point with the right structure. 
+
+That's different from copying a template you don't fully understand and I think personally way more valuable. 
 
 **Explaining unfamiliar APIs.** The Tailwind v4 documentation is good but the migration from v3 is non-trivial if you've internalised the old config approach. Having Claude explain *why* the new CSS-first config works the way it does, with examples from the actual project files, meant I understood the changes rather than just copying them.
 
-**Consistent code style.** Across multiple sessions, Claude maintained the project's conventions — Tailwind utility classes over custom CSS, Zod schemas for validation, no external dependencies unless genuinely necessary. This sounds like a small thing but it's actually quite significant over a multi-session build. The cognitive overhead of re-establishing context with a new engineer on every session is real; with Claude, that overhead was much lower.
+**Consistent code style.** Across multiple sessions, Claude maintained the project's conventions — Tailwind utility classes over custom CSS, Zod schemas for validation, no external dependencies unless genuinely necessary. 
 
-**Debugging build errors.** Astro's error messages are generally good, but TypeScript type errors from content collection schemas can get verbose. Claude was consistently useful for reading the error, identifying which schema field was the problem, and proposing a fix — often in one shot.
+This sounds like a small thing but it's actually quite significant over a multi-session build. The cognitive overhead of re-establishing context at the start of every session *after* I've already finished my days work is real, with Claude Code there was no brain-latency time. 
+
+**Debugging build errors.** Astro's error messages are generally good, but TypeScript type errors from content collection schemas can get verbose. Claude was consistently useful for reading the error, identifying which schema field was the problem, and proposing a fix — often in one shot — usually pointing out my bad TypeScript...
 
 ### What required more care
 
-**Hallucination on version-specific APIs.** Tailwind CSS v4 and Astro v5 are both recent enough that Claude's training data doesn't have comprehensive coverage. There were a few moments where the suggested syntax was from an older version. The fix here is straightforward: always verify against the current documentation, treat suggestions as starting points not answers, and notice when something doesn't build.
+**Hallucination on version-specific APIs.** Tailwind CSS v4 and Astro v5 are both recent enough that Claude's training data doesn't have comprehensive coverage. Fair Enough. There were a few moments where the suggested syntax was from an older version. The fix here is straightforward: always verify against the current documentation, treat suggestions as starting points not answers, and notice when something doesn't build.
 
 **Over-engineering when under-specified.** If I asked an open-ended question like "how should I structure the filter component?" without constraints, the first answer would often include more abstraction than the problem needed. Being specific — "the component needs to filter by pillar only, client-side, no external state management" — produced much more appropriate responses. This is a prompting discipline issue as much as a model issue.
 
@@ -91,9 +95,11 @@ I used [Claude Code](https://www.anthropic.com/claude-code) — Anthropic's CLI 
 
 Yes, without much hesitation — and I already am, for everything else I'm building at the moment.
 
-The honest summary: Claude Code is most useful not as a code generator but as a thinking partner that can hold context, explain its reasoning, and adapt to your constraints. The quality of the output correlates directly with the quality of the input. Vague questions produce bloated answers; precise questions with clear constraints produce focused, usable responses.
+---
+Summary: Claude Code is most useful not as a code generator but as a thinking partner that can hold context, explain its reasoning, and adapt to your constraints. The quality of the output correlates directly with the quality of the input (if you want my less polite version of this sentence please message me!) Vague questions produce bloated answers; precise questions with clear constraints produce focused, usable responses.
+---
 
-For a project like this — a solo build with a clear scope, a familiar (to me) deployment target, and a desire to understand the framework rather than just ship something — it was a genuinely good fit. I learned Astro properly by doing the tutorial, then extended that understanding with Claude as a collaborator rather than a crutch.
+For a project like this — a solo build with a clear scope, a familiar (to me) deployment target, and a desire to understand the framework rather than just ship something — it was a genuinely good fit. 
 
 The full source is on GitHub at [samcopsey/blog](https://github.com/samcopsey/blog). Every component, every schema, the deployment workflow, all of it — open and readable. If you're building something similar, you're welcome to use it as a reference.
 
@@ -111,3 +117,4 @@ The full source is on GitHub at [samcopsey/blog](https://github.com/samcopsey/bl
 | CI/CD | GitHub Actions |
 | Hosting | GitHub Pages |
 | Domain | blog.samcopsey.co.uk |
+| Analytics | Umami (self-hosted on Railway) |
