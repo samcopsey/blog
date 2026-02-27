@@ -17,6 +17,7 @@ Personal blog and portfolio for Sam Copsey — Engineering & Innovation Manager 
 | Interactive islands | [React 18](https://react.dev) |
 | Content | Markdown + Astro content collections (Zod-validated schemas) |
 | Code highlighting | [Shiki](https://shiki.style) — dual themes (GitHub Dark / Light) |
+| Analytics | [Umami](https://umami.is) (self-hosted, privacy-first, no cookies) |
 | CI/CD | GitHub Actions |
 | Hosting | GitHub Pages |
 
