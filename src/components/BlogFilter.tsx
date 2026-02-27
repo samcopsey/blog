@@ -22,6 +22,13 @@ const pillarLabels: Record<string, string> = {
   'development': 'Development',
 };
 
+const formatLabels: Record<string, string> = {
+  'how-to': 'How-to',
+  'opinion': 'Opinion',
+  'architecture': 'Architecture',
+  'project-writeup': 'Project writeup',
+};
+
 const pillarStyles: Record<string, { bg: string; text: string }> = {
   'agent-building': { bg: 'rgba(59,130,246,0.15)', text: '#3b82f6' },
   'engineering-leadership': { bg: 'rgba(34,197,94,0.15)', text: '#22c55e' },
@@ -156,6 +163,9 @@ export default function BlogFilter({ posts }: Props) {
                   }}
                 >
                   {pillarLabels[post.pillar]}
+                </span>
+                <span style={{ fontSize: '13px', color: 'var(--text-tertiary)' }}>
+                  {formatLabels[post.format] ?? post.format}
                 </span>
                 <time style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
                   {formatDate(post.pubDate)}

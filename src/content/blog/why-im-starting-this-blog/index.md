@@ -11,7 +11,7 @@ tags:
 draft: false
 ---
 
-I've spent the last 6 years building cloud platforms, pro/no code solutions, high performance teams and more recently AI agents and solutions for large enterprise businesses.
+I've spent the last 8 years building cloud platforms, pro/no code solutions, high performance teams and more recently AI agents and solutions for large enterprise businesses.
 During that time, I kept wishing a blog existed that could guide me through it all — what worked, what didn't, how to build this, how to manage that.
 
 That blog didn't exist. So I thought I'd write it!

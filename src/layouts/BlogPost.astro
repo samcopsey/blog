@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { post, minutesRead } = Astro.props;
-const { title, description, pubDate, pillar, heroImage, githubRepo } = post.data;
+const { title, description, pubDate, pillar, format, heroImage, githubRepo } = post.data;
 const ogImage = `/og/${post.slug}.png`;
 
 const formattedDate = new Intl.DateTimeFormat('en-GB', {
@@ -22,6 +22,13 @@ const pillarLabels: Record<string, string> = {
   'engineering-leadership': 'Engineering Leadership',
   'sovereign-ai': 'Sovereign AI',
   'development': 'Development',
+};
+
+const formatLabels: Record<string, string> = {
+  'how-to': 'How-to',
+  'opinion': 'Opinion',
+  'architecture': 'Architecture',
+  'project-writeup': 'Project writeup',
 };
 
 const pillarStyles: Record<string, string> = {
@@ -40,6 +47,7 @@ const pillarStyles: Record<string, string> = {
         <h1 class="post-title" transition:name={`post-title-${post.slug}`}>{title}</h1>
         <div class="post-meta">
           <span class="pillar-badge" style={pillarStyles[pillar]}>{pillarLabels[pillar]}</span>
+          <span class="format-label">{formatLabels[format]}</span>
           <time datetime={new Date(pubDate).toISOString()}>{formattedDate}</time>
           <span class="separator" aria-hidden="true">·</span>
           <span>{minutesRead} min read</span>
@@ -109,6 +117,11 @@ const pillarStyles: Record<string, string> = {
     padding: 3px 10px;
     border-radius: 9999px;
     font-weight: 500;
+  }
+
+  .format-label {
+    font-size: 13px;
+    color: var(--text-tertiary);
   }
 
   .separator {
