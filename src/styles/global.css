@@ -114,6 +114,12 @@ body {
   color: var(--code-text);
 }
 
+/* Shiki dual-theme: default inline styles are github-light; swap to --shiki-dark in dark mode */
+html:not(.light) .astro-code,
+html:not(.light) .astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
 .prose blockquote {
   border-left: 3px solid var(--accent);
   padding-left: 1rem;

@@ -66,6 +66,12 @@ const pillarStyles: Record<string, string> = {
       </div>
     </article>
   </div>
+
+  <!-- Lightbox overlay -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+  </div>
 </BaseLayout>
 
 <style>
@@ -138,3 +144,95 @@ const pillarStyles: Record<string, string> = {
     color: var(--accent-hover);
   }
 </style>
+
+<style is:global>
+  .prose img {
+    cursor: zoom-in;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    object-fit: contain;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
+
+  .lightbox.active .lightbox-img {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+
+    const lightboxImg = lightbox.querySelector('.lightbox-img') as HTMLImageElement;
+    const closeBtn = lightbox.querySelector('.lightbox-close') as HTMLButtonElement;
+
+    function open(src: string, alt: string) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function close() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+    }
+
+    document.querySelectorAll('.prose img').forEach((img) => {
+      img.addEventListener('click', () => {
+        const el = img as HTMLImageElement;
+        open(el.src, el.alt);
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  });
+</script>
