@@ -10,7 +10,7 @@ techStack:
   - TypeScript
   - GitHub Actions
   - GitHub Pages
-status: active
+status: complete
 featured: true
 sortOrder: 1
 ---
