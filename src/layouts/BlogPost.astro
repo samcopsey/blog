@@ -71,6 +71,7 @@ const pillarStyles: Record<string, string> = {
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="lightbox-close" aria-label="Close">&times;</button>
     <img class="lightbox-img" src="" alt="" />
+    <video class="lightbox-video" src="" muted playsinline controls></video>
   </div>
 </BaseLayout>
 
@@ -146,7 +147,8 @@ const pillarStyles: Record<string, string> = {
 </style>
 
 <style is:global>
-  .prose img {
+  .prose img,
+  .prose video {
     cursor: zoom-in;
   }
 
@@ -168,7 +170,8 @@ const pillarStyles: Record<string, string> = {
     pointer-events: auto;
   }
 
-  .lightbox-img {
+  .lightbox-img,
+  .lightbox-video {
     max-width: 90vw;
     max-height: 90vh;
     border-radius: 8px;
@@ -177,7 +180,13 @@ const pillarStyles: Record<string, string> = {
     transition: transform 0.2s ease;
   }
 
-  .lightbox.active .lightbox-img {
+  .lightbox-video {
+    display: none;
+    border: none;
+  }
+
+  .lightbox.active .lightbox-img,
+  .lightbox.active .lightbox-video {
     transform: scale(1);
   }
 
@@ -206,11 +215,24 @@ const pillarStyles: Record<string, string> = {
     if (!lightbox) return;
 
     const lightboxImg = lightbox.querySelector('.lightbox-img') as HTMLImageElement;
+    const lightboxVideo = lightbox.querySelector('.lightbox-video') as HTMLVideoElement;
     const closeBtn = lightbox.querySelector('.lightbox-close') as HTMLButtonElement;
 
-    function open(src: string, alt: string) {
+    function openImage(src: string, alt: string) {
       lightboxImg.src = src;
       lightboxImg.alt = alt;
+      lightboxImg.style.display = 'block';
+      lightboxVideo.style.display = 'none';
+      lightboxVideo.pause();
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function openVideo(src: string) {
+      lightboxVideo.src = src;
+      lightboxVideo.style.display = 'block';
+      lightboxImg.style.display = 'none';
+      lightboxVideo.play();
       lightbox.classList.add('active');
       lightbox.setAttribute('aria-hidden', 'false');
     }
@@ -218,12 +240,22 @@ const pillarStyles: Record<string, string> = {
     function close() {
       lightbox.classList.remove('active');
       lightbox.setAttribute('aria-hidden', 'true');
+      lightboxVideo.pause();
     }
 
     document.querySelectorAll('.prose img').forEach((img) => {
       img.addEventListener('click', () => {
         const el = img as HTMLImageElement;
-        open(el.src, el.alt);
+        openImage(el.src, el.alt);
+      });
+    });
+
+    document.querySelectorAll('.prose video').forEach((video) => {
+      video.addEventListener('click', (e) => {
+        e.preventDefault();
+        const el = video as HTMLVideoElement;
+        el.pause();
+        openVideo(el.src || el.querySelector('source')?.src || '');
       });
     });
 
