@@ -12,6 +12,8 @@ tags:
 draft: false
 ---
 
+**<a href="/downloads/Measuring%20What%20Matters%20-%20A%20Framework%20for%20AI%20&%20Automation%20Success%20Measurement.pdf" target="_blank" rel="noopener noreferrer" data-umami-event="download-measuring-what-matters-pdf">Download: Measuring What Matters (PDF, v1)</a>**
+
 A 2025 MIT study found that 95% of generative AI projects fail to demonstrate ROI. Not because the projects are failing. Because the measurement is wrong.
 
 Most teams measure AI success the same way they measure traditional software: hours saved, cost per item, velocity. These metrics tell you how much you built and how fast. They tell you almost nothing about whether what you built is actually working.
@@ -57,10 +59,6 @@ The full document covers:
 - A three month implementation roadmap: baseline, instrument, report
 - Per product measurement plans and quarterly scorecard templates
 - Responsible AI as a cross cutting lens across all seven dimensions
-
-### Download the PDF
-
-**<a href="/downloads/Measuring%20What%20Matters%20-%20A%20Framework%20for%20AI%20&%20Automation%20Success%20Measurement.pdf" target="_blank" rel="noopener noreferrer" data-umami-event="download-measuring-what-matters-pdf">Download: Measuring What Matters (PDF, v1)</a>**
 
 ## Who this is for
 
