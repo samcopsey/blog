@@ -12,7 +12,7 @@ tags:
 draft: false
 ---
 
-<a href="/downloads/Measuring%20What%20Matters%20-%20A%20Framework%20for%20AI%20&%20Automation%20Success%20Measurement.pdf" target="_blank" rel="noopener noreferrer" data-umami-event="download-measuring-what-matters-pdf" class="download-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>Download the framework (PDF)</a>
+<a href="/downloads/Measuring%20What%20Matters%20-%20A%20Framework%20for%20AI%20&%20Automation%20Success%20Measurement.pdf" target="_blank" rel="noopener noreferrer" data-umami-event="download-measuring-what-matters-pdf">Download the framework (PDF)</a>
 
 A 2025 MIT study found that 95% of generative AI projects fail to demonstrate ROI. Not because the projects are failing. Because the measurement is wrong.
 
