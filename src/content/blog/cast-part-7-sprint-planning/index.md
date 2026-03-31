@@ -6,7 +6,7 @@ pillar: agent-building
 format: how-to
 tags:
   - cast
-  - azure-foundry
+  - microsoft-foundry
   - agents
   - sprint-planning
   - spec-writing
@@ -863,9 +863,9 @@ dynamic "env" {
 
 All users share the PAT's permissions (no per-user audit trail, no principle of least privilege), but that's acceptable for a development environment with a single developer.
 
-The production path (Phase 7: custom Streamlit + FastAPI UI) will handle token forwarding ourselves, bypassing Foundry's consent service entirely. The user authenticates via MSAL, the FastAPI backend forwards their bearer token to the MCP server, and we get per-user ADO access without depending on Foundry's OAuth plumbing. The irony isn't lost on me: one of the main reasons for choosing Foundry Agent Service was OAuth Identity Passthrough, and that's the exact feature that broke.
+The production path (Phase 7: custom Streamlit + FastAPI UI) will handle token forwarding ourselves, bypassing Foundry's consent service entirely. The user authenticates via MSAL, the FastAPI backend forwards their bearer token to the MCP server, and we get per-user ADO access without depending on Foundry's OAuth plumbing. The irony isn't lost on me: one of the main reasons for choosing Microsoft Foundry was OAuth Identity Passthrough, and that's the exact feature that broke.
 
-**Gotcha:** While debugging, I also discovered the JWT validator only accepted Azure AD v2.0 issuer format (`login.microsoftonline.com`), but ADO tokens use v1.0 format (`sts.windows.net`). Fixed in v0.8.3 of the MCP server to accept both.
+**Gotcha:** While debugging, I also discovered the JWT validator only accepted Entra ID v2.0 issuer format (`login.microsoftonline.com`), but ADO tokens use v1.0 format (`sts.windows.net`). Fixed in v0.8.3 of the MCP server to accept both.
 
 ## Gotcha: double /mcp path
 
