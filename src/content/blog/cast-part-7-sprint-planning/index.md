@@ -18,6 +18,9 @@ draft: false
 githubRepo: "https://github.com/samcopsey/cast-ado-agent"
 ---
 
+<video src="/videos/cast-part-7/sprint-planning-demo.mp4" autoplay loop muted playsinline></video>
+<span class="video-caption">Live interaction: the Cast agent planning a sprint with capacity calculation and human approval</span>
+
 In [Part 6](/blog/cast-part-6-document-generator) I consolidated Cast from a multi-agent Foundry Workflow into a single combined agent with 50+ MCP tools. That agent can discover ADO data and generate professional documents. Now it needs to actually *plan work* and *write specifications*, the two capabilities that justify the whole system.
 
 This post covers three things: a sprint planning agent that calculates capacity in hours, proposes assignments, and refuses to touch ADO until a human says "approve"; a functional spec writer that follows a strict 10-section template and generates ROI questions instead of fabricating numbers; and a debugging war story about Foundry's OAuth consent service breaking between Sunday and Thursday with no code changes on my side.
