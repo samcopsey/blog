@@ -51,6 +51,13 @@ const { title, description, ogImage } = Astro.props;
       data-domains="blog.samcopsey.co.uk"
       is:inline
     ></script>
+    <script is:inline>
+      document.addEventListener('astro:page-load', function () {
+        if (typeof umami !== 'undefined') {
+          umami.track();
+        }
+      });
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />

@@ -1,5 +1,5 @@
 ---
-title: "Cast — AI DevOps Agent"
+title: "Cast: An AI Azure DevOps Agent"
 description: "A multi-agent system built on Microsoft Agent Framework and Microsoft Foundry that assists engineering teams with Azure DevOps management, sprint planning, work item discovery, and document generation."
 githubUrl: "https://github.com/samcopsey/cast-ado-agent"
 blogPost: "cast-part-1-vision-and-architecture"
